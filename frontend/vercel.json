@@ -5,7 +5,7 @@
   "outputDirectory": "dist",
   "installCommand": "npm install",
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://mulab-intake-api.onrender.com/api/$1" },
+    { "source": "/api/(.*)", "destination": "https://clientbrief-api.vercel.app/api/$1" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ]
 }
