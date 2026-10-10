@@ -106,19 +106,19 @@ mulab-client-intake/
 │   ├── src/
 │   │   ├── config/           # validated environment
 │   │   ├── controllers/      # brief controller
-│   │   ├── lib/              # logger, idempotency store
+│   │   ├── lib/              # logger, Turso persistence, idempotency store
 │   │   ├── middleware/       # rate limiting, error handling
 │   │   ├── routes/           # /api/brief
 │   │   ├── services/         # email + submission orchestration
 │   │   ├── templates/        # owner & client HTML/text email templates
 │   │   ├── utils/            # html escaping, async handler
 │   │   ├── validators/       # Zod brief schema
-│   │   ├── app.ts            # express app (testable)
-│   │   └── server.ts         # http entrypoint
+│   │   ├── app.ts            # express app (Vercel entry + testable factory)
+│   │   └── server.ts         # local http entrypoint
 │   ├── tests/                # Vitest + Supertest (mocked transport)
+│   ├── vercel.json           # Vercel deployment config
 │   └── package.json
 │
-├── render.yaml               # Render deployment config
 ├── .env.example
 ├── .gitignore
 └── README.md
@@ -268,21 +268,37 @@ npm run build
 
 ## Deployment
 
+Both the frontend and the backend are deployed on **Vercel**.
+
 ### Frontend → Vercel
 
 1. Import the `frontend/` directory as the project root.
 2. Build command `npm run build`, output directory `dist` (already set in `frontend/vercel.json`).
-3. Set environment variables: `VITE_API_URL=https://<your-api-domain>` and `VITE_PRIVACY_URL`.
+3. `frontend/vercel.json` proxies `/api/*` to the backend (rewrite to the backend deployment URL),
+   so the frontend and API share one origin and no CORS configuration is needed in production.
+4. Optional: set `VITE_PRIVACY_URL` to override the privacy policy link.
 
-### Backend → Render
+> If you change the backend URL, update the `/api/(.*)` rewrite in `frontend/vercel.json`
+> and redeploy the frontend.
 
-A `render.yaml` blueprint is included.
+### Backend → Vercel
 
-1. Point Render at the repository (or the `backend/` directory).
-2. Set the secret environment variables: `GMAIL_USER`, `GMAIL_APP_PASSWORD`, `OWNER_EMAIL`,
-   `CLIENT_URL` (your Vercel URL), and optionally `PRIVACY_POLICY_URL`.
-3. Health check path: `/api/health`.
+The backend runs as a single Vercel Function via zero-config **Express detection**: `src/app.ts`
+default-exports the Express app and Vercel runs it for every route, so all `/api/*` paths
+(including nested ones such as `/api/health/db`) are served by one function.
 
+1. Import the `backend/` directory as the project root.
+2. `backend/vercel.json` pins `installCommand` to `npm ci --include=dev` (Vercel installs with
+   `NODE_ENV=production`, which would otherwise omit the dev dependencies needed to build).
+3. Set the environment variables: `NODE_ENV`, `CLIENT_URL` (comma-separated allowed origins, e.g.
+   the frontend production URL), `GMAIL_USER`, `GMAIL_APP_PASSWORD`, `OWNER_EMAIL`, `MAIL_FROM_NAME`,
+   `SEND_CLIENT_CONFIRMATION`, `PRIVACY_POLICY_URL`, `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`,
+   `SMTP_HOST` (`smtp.gmail.com`), and `SMTP_PORT` (`465`).
+4. Health check path: `/api/health` (also `/api/health/db` and `/api/health/email`).
+
+> **Why Vercel for the backend?** Gmail SMTP over ports 465/587 works on Vercel Functions
+> (AWS Lambda only blocks port 25). Render's free tier blocks outbound SMTP ports 25/465/587.
+>
 > On any host, remember to set `CLIENT_URL` to your deployed frontend origin, otherwise CORS will
 > reject browser requests.
 
