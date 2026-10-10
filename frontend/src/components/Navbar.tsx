@@ -20,7 +20,7 @@ export function Navbar({ onStart, variant = 'transparent', showActions = true }:
       )}
     >
       <div className="shell flex h-20 items-center justify-between gap-4">
-        <a href="/" className="flex items-center gap-3" aria-label="MU.LAB home">
+        <a href="/" className="flex items-center gap-3" aria-label="clientbrief home">
           <BrandLogo priority />
         </a>
 

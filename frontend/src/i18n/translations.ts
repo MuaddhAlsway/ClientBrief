@@ -6,7 +6,7 @@ export const translations = {
     'nav.start': 'Start your project',
     'nav.language': 'العربية',
 
-    'hero.eyebrow': 'MU.LAB / PROJECT DISCOVERY',
+    'hero.eyebrow': 'clientbrief / PROJECT DISCOVERY',
     'hero.titleLine1': 'Every Great Project',
     'hero.titleLine2': 'Begins With a Conversation.',
     'hero.description':
@@ -207,15 +207,15 @@ export const translations = {
     'review.design': 'Design Preferences',
     'review.budget': 'Budget & Timeline',
     'review.consent': 'Confirmation',
-    'review.confirmText': 'I confirm that the information provided is accurate and understand that MU.LAB may contact me regarding my project.',
+    'review.confirmText': 'I confirm that the information provided is accurate and understand that clientbrief may contact me regarding my project.',
     'review.privacyText': 'I agree to the processing of my information as described in the',
     'review.privacyLink': 'Privacy Policy',
-    'review.marketingText': 'Send me occasional updates and insights from MU.LAB.',
+    'review.marketingText': 'Send me occasional updates and insights from clientbrief.',
     'review.empty': 'Not provided',
-    'review.submitHint': 'Your brief will be delivered securely to the MU.LAB studio.',
+    'review.submitHint': 'Your brief will be delivered securely to the clientbrief studio.',
 
     'success.title': 'Your Vision Is Now in Motion.',
-    'success.desc': "Thank you for trusting MU.LAB. Your project brief has been received, and we'll be in touch soon.",
+    'success.desc': "Thank you for trusting clientbrief. Your project brief has been received, and we'll be in touch soon.",
     'success.reference': 'Submission reference',
     'success.email': 'Confirmation sent to',
     'success.confirmed': 'Submission confirmed',
@@ -228,7 +228,7 @@ export const translations = {
     'error.validation': 'Some fields need your attention.',
 
     'footer.tagline': 'Digital Experiences, Thoughtfully Engineered.',
-    'footer.rights': '© {year} MU.LAB. All rights reserved.',
+    'footer.rights': '© {year} clientbrief. All rights reserved.',
     'footer.privacy': 'Privacy Policy',
 
     'files.add': 'Add reference links',
@@ -243,7 +243,7 @@ export const translations = {
     'nav.start': 'ابدأ مشروعك',
     'nav.language': 'English',
 
-    'hero.eyebrow': 'MU.LAB / اكتشاف المشروع',
+    'hero.eyebrow': 'clientbrief / اكتشاف المشروع',
     'hero.titleLine1': 'كل مشروع عظيم',
     'hero.titleLine2': 'يبدأ بمحادثة.',
     'hero.description':
@@ -444,15 +444,15 @@ export const translations = {
     'review.design': 'تفضيلات التصميم',
     'review.budget': 'الميزانية والجدول الزمني',
     'review.consent': 'التأكيد',
-    'review.confirmText': 'أؤكد أن المعلومات المقدمة دقيقة وأفهم أن MU.LAB قد يتواصل معي بخصوص مشروعي.',
+    'review.confirmText': 'أؤكد أن المعلومات المقدمة دقيقة وأفهم أن clientbrief قد يتواصل معي بخصوص مشروعي.',
     'review.privacyText': 'أوافق على معالجة معلوماتي كما هو موضح في',
     'review.privacyLink': 'سياسة الخصوصية',
-    'review.marketingText': 'أرغب في تلقي تحديثات وأفكار من MU.LAB من وقت لآخر.',
+    'review.marketingText': 'أرغب في تلقي تحديثات وأفكار من clientbrief من وقت لآخر.',
     'review.empty': 'غير مُدخل',
-    'review.submitHint': 'سيتم تسليم موجزك بأمان إلى استوديو MU.LAB.',
+    'review.submitHint': 'سيتم تسليم موجزك بأمان إلى استوديو clientbrief.',
 
     'success.title': 'رؤيتك أصبحت الآن في حركة.',
-    'success.desc': 'شكرًا لثقتك بـ MU.LAB. تم استلام موجز مشروعك، وسنتواصل معك قريبًا.',
+    'success.desc': 'شكرًا لثقتك بـ clientbrief. تم استلام موجز مشروعك، وسنتواصل معك قريبًا.',
     'success.reference': 'مرجع الإرسال',
     'success.email': 'تم إرسال التأكيد إلى',
     'success.confirmed': 'تم تأكيد الإرسال',
@@ -465,7 +465,7 @@ export const translations = {
     'error.validation': 'بعض الحقول بحاجة إلى مراجعتك.',
 
     'footer.tagline': 'تجارب رقمية مُهندَسة بعناية.',
-    'footer.rights': '© {year} MU.LAB. جميع الحقوق محفوظة.',
+    'footer.rights': '© {year} clientbrief. جميع الحقوق محفوظة.',
     'footer.privacy': 'سياسة الخصوصية',
 
     'files.add': 'أضف روابط مرجعية',

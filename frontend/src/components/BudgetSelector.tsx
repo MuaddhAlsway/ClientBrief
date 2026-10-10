@@ -37,7 +37,7 @@ export function BudgetSelector({ value, onChange, options }: BudgetSelectorProps
               {isRange ? amount : option('budget', item)}
             </span>
             <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-faint">
-              {isRange ? 'SAR' : 'MU.LAB'}
+              {isRange ? 'SAR' : 'clientbrief'}
             </span>
           </motion.button>
         );

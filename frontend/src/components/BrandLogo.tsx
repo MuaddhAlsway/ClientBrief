@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface BrandLogoProps {
@@ -8,35 +7,19 @@ interface BrandLogoProps {
 }
 
 /**
- * The original MU.LAB logo. Displayed as-is (white mark on pure black),
- * served from /logo.png. Falls back to a typographic wordmark if the
- * asset cannot be loaded.
+ * Typographic "clientbrief" wordmark shown across the app.
  */
-export function BrandLogo({ className, alt = 'MU.LAB', priority = false }: BrandLogoProps) {
-  const [failed, setFailed] = useState(false);
-
-  if (failed) {
-    return (
-      <span
-        className={cn('font-display font-semibold tracking-tightest text-ink', className)}
-        aria-label={alt}
-        role="img"
-      >
-        MU<span className="text-faint">.</span>LAB
-      </span>
-    );
-  }
-
+export function BrandLogo({ className, alt = 'clientbrief' }: BrandLogoProps) {
   return (
-    <img
-      src="/logo.png"
-      alt={alt}
-      width={160}
-      height={56}
-      loading={priority ? 'eager' : 'lazy'}
-      decoding="async"
-      onError={() => setFailed(true)}
-      className={cn('h-10 w-auto select-none object-contain', className)}
-    />
+    <span
+      role="img"
+      aria-label={alt}
+      className={cn(
+        'inline-flex items-center font-display text-2xl font-semibold leading-none tracking-tightest text-ink',
+        className,
+      )}
+    >
+      clientbrief
+    </span>
   );
 }
