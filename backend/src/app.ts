@@ -5,7 +5,7 @@ import type { RequestHandler } from 'express';
 import cors from 'cors';
 import { env } from './config/env.js';
 import { briefRouter } from './routes/brief.routes.js';
-import { errorHandler, notFound } from './middleware/errorHandler.js';
+import { errorHandler, HttpError, notFound } from './middleware/errorHandler.js';
 import { generalLimiter } from './middleware/rateLimit.js';
 import { isEmailConfigured, verifyEmailConnection } from './services/email.service.js';
 import { initDb, isDbConfigured, pingDb } from './lib/db.js';
@@ -54,7 +54,7 @@ export function createApp() {
       await initDb();
       next();
     } catch (error) {
-      next(error);
+      next(new HttpError(503, 'We could not reach the form database. Please try again in a moment.'));
     }
   });
 

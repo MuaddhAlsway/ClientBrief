@@ -33,6 +33,9 @@ export function errorHandler(error: unknown, _req: Request, res: Response, _next
     return res.status(error.status).json({ error: error.message, details: error.details });
   }
 
-  logger.error('Unhandled error', { reason: error instanceof Error ? error.message : 'unknown' });
+  logger.error('Unhandled error', {
+    reason: error instanceof Error ? error.message : 'unknown',
+    stack: error instanceof Error ? error.stack : undefined,
+  });
   return res.status(500).json({ error: 'Something went wrong on our end. Please try again.' });
 }

@@ -22,28 +22,45 @@ export function initDb(): Promise<void> {
   if (db) return Promise.resolve();
   if (!initPromise) {
     initPromise = (async () => {
-      client = createClient({
-        url: env.db.url,
-        authToken: env.db.authToken || undefined,
-      });
-      db = drizzle(client, { schema });
+      const attempts = 3;
+      let lastError: unknown;
+      for (let attempt = 1; attempt <= attempts; attempt++) {
+        try {
+          client = createClient({
+            url: env.db.url,
+            authToken: env.db.authToken || undefined,
+          });
+          db = drizzle(client, { schema });
 
-      await client.execute(`
-        CREATE TABLE IF NOT EXISTS submissions (
-          id TEXT PRIMARY KEY,
-          reference_id TEXT NOT NULL,
-          status TEXT NOT NULL,
-          payload TEXT,
-          created_at INTEGER NOT NULL,
-          updated_at INTEGER NOT NULL
-        )
-      `);
+          await client.execute(`
+            CREATE TABLE IF NOT EXISTS submissions (
+              id TEXT PRIMARY KEY,
+              reference_id TEXT NOT NULL,
+              status TEXT NOT NULL,
+              payload TEXT,
+              created_at INTEGER NOT NULL,
+              updated_at INTEGER NOT NULL
+            )
+          `);
 
-      logger.info('Database ready (Turso / libSQL)');
+          logger.info('Database ready (Turso / libSQL)');
+          return;
+        } catch (error) {
+          lastError = error;
+          client = null;
+          db = null;
+          if (attempt < attempts) {
+            logger.warn('Database init attempt failed; retrying', {
+              attempt,
+              reason: error instanceof Error ? error.message : 'unknown',
+            });
+            await new Promise((resolve) => setTimeout(resolve, 300 * attempt));
+          }
+        }
+      }
+      throw lastError;
     })().catch((error) => {
       initPromise = null;
-      client = null;
-      db = null;
       throw error;
     });
   }
