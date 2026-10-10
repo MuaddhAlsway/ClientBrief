@@ -13,7 +13,12 @@ function getTransporter(): Transporter {
   }
   if (!transporter) {
     transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: env.mail.host,
+      port: env.mail.port,
+      secure: env.mail.port === 465,
+      connectionTimeout: 15_000,
+      greetingTimeout: 15_000,
+      socketTimeout: 30_000,
       auth: {
         user: env.mail.user,
         pass: env.mail.appPassword,

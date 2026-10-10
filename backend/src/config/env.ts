@@ -22,6 +22,8 @@ const rawSchema = z.object({
   GMAIL_APP_PASSWORD: optionalString,
   OWNER_EMAIL: optionalEmail,
   MAIL_FROM_NAME: z.string().default('MU.LAB'),
+  SMTP_HOST: z.string().default('smtp.gmail.com'),
+  SMTP_PORT: z.coerce.number().int().positive().default(465),
   SEND_CLIENT_CONFIRMATION: booleanish.default(true),
   PRIVACY_POLICY_URL: z.string().default(''),
 
@@ -61,6 +63,8 @@ export const env = {
     sendClientConfirmation: raw.SEND_CLIENT_CONFIRMATION,
     privacyPolicyUrl: raw.PRIVACY_POLICY_URL,
     configured: emailConfigured,
+    host: raw.SMTP_HOST,
+    port: raw.SMTP_PORT,
   },
   db: {
     url: databaseUrl,
