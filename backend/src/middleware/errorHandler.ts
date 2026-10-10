@@ -28,6 +28,23 @@ export function errorHandler(error: unknown, _req: Request, res: Response, _next
     return res.status(422).json({ error: 'Some fields need your attention.', fieldErrors });
   }
 
+  // body-parser failures (oversized body, malformed JSON / unsupported charset)
+  // carry an HTTP status and a `type` tag; surface them without a generic 500.
+  const bodyError = error as { status?: number; type?: string; message?: string };
+  if (typeof bodyError.status === 'number' && bodyError.status >= 400 && bodyError.status < 500) {
+    if (bodyError.type === 'entity.too.large' || bodyError.status === 413) {
+      return res.status(413).json({
+        error: 'This form submission is too large. Please shorten your answers and try again.',
+      });
+    }
+    logger.warn('Request body rejected', {
+      status: bodyError.status,
+      type: bodyError.type,
+      reason: bodyError.message,
+    });
+    return res.status(bodyError.status).json({ error: 'The request body could not be read.' });
+  }
+
   if (error instanceof HttpError) {
     if (error.status >= 500) logger.error(error.message);
     return res.status(error.status).json({ error: error.message, details: error.details });
